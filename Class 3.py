@@ -3,8 +3,9 @@ d = {}
 for letter in  set(L):
       d[letter] = L.count(letter)
 
-for k, v in d.items():
-    print('{}={}'.format(k,v))
+keys = sorted(d, key=lambda x: d[x])
+for key in keys:
+    print('{}={}'.format(key,d[key]))
 
 
 
