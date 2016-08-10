@@ -87,3 +87,27 @@ def f(a, b, L={}):
 print f('1', 1)
 print f('2', 2)
 print f('3', 3)
+
+#########################
+def f():
+    yield(1)
+    yield(2)
+    yield(3)
+    yield(4)
+    yield(0)
+    yield(7)
+
+a = f()
+l=[]
+print(l)
+l2=list(f())
+print(l2)
+
+l = [_ for _ in f() if _>2 ]
+print(l)
+l = (_ for _ in f() if _>2 )
+print(l)
+print(l.next())
+
+# l={k:v for k,v in a}
+
