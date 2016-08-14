@@ -13,7 +13,6 @@ def one_digit(s_number):
     return word
 
 def two_digit(s_number):
-
     if s_number[0]=='0': # 0x (0..9)
         word = one_digit(s_number[1])
     elif s_number[1]=='0': #10..90
@@ -31,10 +30,6 @@ def three_digit(s_number):
         word = two_digit(s_number[1:])
     elif s_number[1]=='0' and s_number[2]=='0': # x00 (100..900)
         word = one_digit(s_number[0]) + ' hundred'
-    #elif s_number[1]=='0' and not s_number[2]=='0': # x0y (101..909)
-    #    word = one_digit(s_number[0]) + ' hundred ' + one_digit(s_number[-1])
-    #elif s_number[2]=='0': # xy0 (110..990)
-    #    word = one_digit(s_number[0]) + ' hundred ' + two_digit(s_number[1:])
     else: # others + exceptions
         word =  one_digit(s_number[0]) + ' hundred ' + two_digit(s_number[1:])
 
@@ -45,10 +40,6 @@ def four_digit(s_number):
         word = three_digit(s_number[1:])
     elif s_number[1]=='0' and s_number[2]=='0' and s_number[3]=='0': # x000 (1000..9000)
         word = one_digit(s_number[0]) + ' thousand'
-    #elif  s_number[1]=='0' and s_number[2]=='0': # x00y (1001...9009)
-    #    word = one_digit(s_number[0]) + ' thousand and ' +  one_digit(s_number[-1])
-    #elif  s_number[1]=='0': #x0yz (1010..9010)
-    #    word = one_digit(s_number[0]) + ' thousand and ' + two_digit(s_number[2:])
     else: #others
         word = one_digit(s_number[0]) + ' thousand and ' + three_digit(s_number[1:])
 
