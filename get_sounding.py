@@ -14,11 +14,12 @@ def one_digit(s_number):
     return word
 
 def two_digit(s_number):
-    if s_number[0]=='0': # 0x (0..9)
+    word=''
+    if s_number[0]=='0' and not s_number[1]=='0': # 0x (1..9)
         word = one_digit(s_number[1])
-    elif s_number[1]=='0': #10..90
-        word = dict1[s_number]
-    elif s_number[0]=='1': #11..19
+    elif s_number[0]=='0' and s_number[1]=='0': # 00 (0)
+        word = ''
+    elif s_number[1]=='0' or s_number[0]=='1': #10..90 or   #11..19
         word = dict1[s_number]
     else: #others
         # part1 = s_number[0]+'0' #20..90
@@ -36,32 +37,12 @@ def three_digit(s_number):
 
     return word
 
-def four_digit(s_number):
-    if s_number[0]=='0': #0xyz (0000...0999)
-        word = three_digit(s_number[1:])
-    elif s_number[1]=='0' and s_number[2]=='0' and s_number[3]=='0': # x000 (1000..9000)
-        word = one_digit(s_number[0]) + ' thousand'
-    else: #others
-        word = one_digit(s_number[0]) + ' thousand and ' + three_digit(s_number[1:])
-
-    return word
-
-def five_digit(s_number):
-    if  s_number[0]=='0': #0xyz (00000...09999)
-        word = four_digit(s_number[1:])
-    elif  s_number[2]=='0' and s_number[3]=='0' and s_number[4]=='0': #xy000 (10000..99000)
-        word = two_digit(s_number[:2]) + ' thousand'
-    else:
-        word =  two_digit(s_number[:2]) + ' thousand and ' + three_digit(s_number[2:])
-    return word
-
-def six_digit(s_number):
-    if s_number[0] == '0':  # 0xyz (000000...099999)
-        word = five_digit(s_number[1:])
-    elif  s_number[3]=='0' and s_number[4]=='0' and s_number[5]=='0': #xyz000 (100000..999000)
-        word = three_digit(s_number[:3]) + ' thousand'
-    else:
-        word = three_digit(s_number[:3]) +  ' thousand and ' +  three_digit(s_number[3:])
+def digit_four_five_six(s_number):
+    if len(s_number) == 4:
+        s_number = '00' + s_number
+    elif len(s_number) == 5:
+        s_number = '0' + s_number
+    word = three_digit(s_number[:3]) + ' thousand and ' + three_digit(s_number[3:])
     return word
 
 def int_to_word(number):
@@ -72,9 +53,14 @@ def int_to_word(number):
         return 'Input number is out of range'
     if number==1000000:
         return 'one million'
+    if number==0:
+        return 'zero'
+
 
     s_number = str(number)
-    word = eval(dict2[len(s_number)]+'(s_number)')
+    if len(s_number)<4:
+        word = eval(dict2[len(s_number)]+'(s_number)')
+    else: word = digit_four_five_six(s_number)
     return word
 
 if __name__ == '__main__':
