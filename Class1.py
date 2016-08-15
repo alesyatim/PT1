@@ -27,4 +27,3 @@ print(zip(a,b))
 
 print(" ".join("ddd"))
 
-import this
