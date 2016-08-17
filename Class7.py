@@ -25,6 +25,7 @@ def parse_devices(lst):
     devices['block']=list(B)
     devices['part']=list(part)
     print(devices)
+    return devices
 
 lst = ['sda', 'sdb', 'sdb1', 'sdb2', 'sdb3', 'sdc']
 parse_devices(lst)
