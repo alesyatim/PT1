@@ -1,33 +1,22 @@
 import re
 
 def parse_devices(lst):
-    part = []
-    for dev in lst:
-        pattern = re.compile('sd[a-z]{1,2}[0-9]{1,2}')
-        res = pattern.findall(dev)
-        if not len(res)==0:
-            part.append(res[0])
-    print(part)
-    P = set(part)
-    A = set(lst)
-    C = A.difference(P)
-    temp=[]
-    for dev in part:
-        if dev[-2].isdigit():
-            temp.append(dev[:-2])
-        else: temp.append(dev[:-1])
-    X = set(temp)
-    print(X)
-    B = C.difference(X)
-    print(B)
+    pattern1=re.compile('sd[a-z]{1,2}[0-9]{1,2}')
+    pattern2=re.compile('sd[a-z]{1,2}$')
+    part = [dev for dev in lst if pattern1.search(dev)]
+    block = [dev for dev in lst if pattern2.search(dev)]
+    print('====', part, block)
 
+    P = set(part)
+    X = set([dev[:-1] for dev in part])
+    B = set(block).difference(X)
     devices = dict()
     devices['block']=list(B)
     devices['part']=list(part)
     print(devices)
     return devices
 
-lst = ['sda', 'sdb', 'sdb1', 'sdb2', 'sdb3', 'sdc']
+lst = ['sda', 'sdb', 'sdb1', 'sdb2', 'sdb3','sdb99', 'sdc', 'sdc3','sda1']
 parse_devices(lst)
 
 # def parse_date(strg):
