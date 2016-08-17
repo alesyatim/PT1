@@ -12,11 +12,11 @@ def parse_devices(lst):
     B = set(block).difference(X)
     devices = dict()
     devices['block']=list(B)
-    devices['part']=list(part)
+    devices['part']=part
     print(devices)
     return devices
 
-lst = ['sda', 'sdb', 'sdb1', 'sdb2', 'sdb3','sdb99', 'sdc', 'sdc3','sda1']
+lst = ['sda', 'sdb', 'sdb1', 'sdb2', 'sdb3','sdb99', 'sdc', 'sdc3']
 parse_devices(lst)
 
 # def parse_date(strg):
