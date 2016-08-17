@@ -1,56 +1,33 @@
 import re
 
-# def dev(lst):
-#     s=''
-#     devices = dict()
-#     l_block=[]
-#     l_part=[]
-#     devices['block']=l_block
-#     devices['part']=l_part
-#     for i in lst:
-#         s+=i
-#     print(s)
-#     for i in lst:
-#         p = re.compile(i+'[0-9]{1,2}')
-#         res = p.findall(s)
-#         print(res)
-#         if len(res)==0:
-#             devices['block'].append(i)
-#         else:
-#             temp = res[:]
-#             l_part.append(res)
-#
-#     print(devices)
-
-def dev(lst):
-    devices = dict()
+def parse_devices(lst):
     part = []
     for dev in lst:
-        p = re.compile('[a-z]{3}[0-9]{1,2}')
-        res = p.findall(dev)
+        pattern = re.compile('sd[a-z]{1,2}[0-9]{1,2}')
+        res = pattern.findall(dev)
         if not len(res)==0:
             part.append(res[0])
-            print(res)
     print(part)
-    set_part=set(part)
-    set_all=set(lst)
-    x = set_all.difference(set_part)
-    print(x)
-    print(set_part, set_all)
+    P = set(part)
+    A = set(lst)
+    C = A.difference(P)
+    temp=[]
     for dev in part:
-        p = re.compile(dev[0:2])
-        #res =
+        if dev[-2].isdigit():
+            temp.append(dev[:-2])
+        else: temp.append(dev[:-1])
+    X = set(temp)
+    print(X)
+    B = C.difference(X)
+    print(B)
 
-
-
-    l_block=[]
-    l_part=[]
-    devices['block']=l_block
-    devices['part']=l_part
+    devices = dict()
+    devices['block']=list(B)
+    devices['part']=list(part)
     print(devices)
 
 lst = ['sda', 'sdb', 'sdb1', 'sdb2', 'sdb3', 'sdc']
-dev(lst)
+parse_devices(lst)
 
 # def parse_date(strg):
 #     patern = '([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})T([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})\.[0-9]*'
