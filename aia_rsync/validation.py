@@ -42,3 +42,19 @@ if __name__ == '__main__':
     err2 = check_file(path2)
     err3 = check_full_path(path3)
     print(err1, err2)
+    
+import socket
+
+def is_ip (s_string):
+    try:
+        socket.inet_pton (socket.AF_INET6, s_string) #Convert an IP address from string format to a packed string suitable
+                                              #for use with low-level network functions.
+                                              # AF_INET for IPv4, AF_INET6 for IPv6  ()
+                                              # AF_INET, AF_UNIX -- socket domains (first argument to socket() call)
+        return True
+    except socket.error:
+        try:
+            socket.inet_pton (socket.AF_INET, s_string)
+            return True
+        except:
+            return False
