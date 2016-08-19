@@ -18,13 +18,21 @@ def parse_keys(in_str):
     return err.errors['Ok']
 
 def parse_args(in_str):
-    pass
+    pattern = re.compile('pass=([a-zA-Z0-9]+)')
+    password = pattern.findall(in_str)[0]
+    add_password(password)
+
+    # add source and destination
+    #pattern = re.compile('')
+
+
+    return err.errors['Ok']
 
 def add_keys(in_keys):
     keys[:] = in_keys[:]
 
-def add_arguments(**kwargs):
-    pass
+def add_password(password):
+    arguments['password'] = password
 
 def get_source():
     source = ''
@@ -42,7 +50,8 @@ def get_arguments():
 
 if __name__ == '__main__':
 
-    test_str = '-v -as -progress -e ssh -i -P /dir'
+    test_str = '-v -as -progress -e ssh -i -P pass=HgtG4Fg /dir'
     parse_keys(test_str)
-    print(keys)
+    parse_args(test_str)
+    print(keys, arguments)
 
