@@ -1,3 +1,6 @@
 import re
 def validate_path(in_str):
-    pattern = re.compile('')
+    try:
+        pass
+    except:
+        pass
