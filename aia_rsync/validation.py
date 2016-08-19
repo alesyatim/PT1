@@ -58,7 +58,6 @@ def is_ip (s_string):
         except:
             return False
 
-
 if __name__ == '__main__':
     path1 = '/tmp/dir'
     path2 = 'file.txt'
