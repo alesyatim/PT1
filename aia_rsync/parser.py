@@ -33,6 +33,18 @@ def add_keys(in_keys):
 
 def add_password(password):
     arguments['password'] = password
+    
+def parse_machine(input_string):
+    parse_in_str = re.split(r'[:,@]', input_string)
+    user_name = parse_in_str[:1]
+          #validation user_name
+    port_name = parse_in_str[1:2]
+          #validation port_name
+    ip_adr = parse_in_str[2:3]
+          #validation ip_adr
+    name_of_file = parse_in_str[3:4]
+          #validation name_of_file
+    return user_name, port_name, ip_adr, name_of_file
 
 def get_source():
     source = ''
