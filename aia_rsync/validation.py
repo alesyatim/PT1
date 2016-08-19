@@ -40,4 +40,5 @@ if __name__ == '__main__':
 
     err1 = check_dir(path1)
     err2 = check_file(path2)
+    err3 = check_full_path(path3)
     print(err1, err2)
