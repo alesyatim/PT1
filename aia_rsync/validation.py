@@ -10,17 +10,27 @@ def check_path(path):
     pass
 
 def check_full_path(path):
-    pass
+    pattern = re.compile('([a-zA-Z]+[,:\.][0-9]{0,4}@([a-zA-z]+|[0-9\.]+):[a-zA-Z0-9_]+\.[a-zA-Z0-9]+)')
+    res =  pattern.match(path)
+    print(res.groups())
+    if res:
+        return err.errors['Ok']
+    else:
+        return err.errors['NotPath']
 
 def check_dir(path):
     pattern = re.compile('(/[a-zA-Z0-9_]+)+')
-    if pattern.match(path):
+    res = pattern.match(path)
+    print(res.groups())
+    if res:
         return err.errors['Ok']
     else: return err.errors['NotDir']
 
 def check_file(path):
     pattern = re.compile('([a-zA-Z0-9_]+\.[a-zA-Z0-9_]+)')
-    if pattern.match(path):
+    res = pattern.match(path)
+    print(res.groups())
+    if res:
         return err.errors['Ok']
     else:
         return err.errors['NotFile']
@@ -57,4 +67,4 @@ if __name__ == '__main__':
     err1 = check_dir(path1)
     err2 = check_file(path2)
     err3 = check_full_path(path3)
-    print(err1, err2)
+    print(err1, err2, err3)
