@@ -1,4 +1,5 @@
 import re
+import socket
 import errors as err
 
 separators = [',', '.', ':']  # valid separators between user and name
@@ -33,18 +34,6 @@ def is_path_exits(path):
 def create_path(path):
     pass
 
-if __name__ == '__main__':
-    path1 = '/tmp/dir'
-    path2 = 'file.txt'
-    path3 = 'user:22@hostname:file.txt'
-
-    err1 = check_dir(path1)
-    err2 = check_file(path2)
-    err3 = check_full_path(path3)
-    print(err1, err2)
-    
-import socket
-
 def is_ip (s_string):
     try:
         socket.inet_pton (socket.AF_INET6, s_string) #Convert an IP address from string format to a packed string suitable
@@ -58,3 +47,14 @@ def is_ip (s_string):
             return True
         except:
             return False
+
+
+if __name__ == '__main__':
+    path1 = '/tmp/dir'
+    path2 = 'file.txt'
+    path3 = 'user:22@hostname:file.txt'
+
+    err1 = check_dir(path1)
+    err2 = check_file(path2)
+    err3 = check_full_path(path3)
+    print(err1, err2)
