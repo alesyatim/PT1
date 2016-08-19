@@ -9,8 +9,6 @@ def run(input_parameters):
         execute()
     except:
         pass
-
-
 #
 def execute(input_parameters):
     try:
@@ -39,3 +37,5 @@ def create_rsync_string():
 def run_rsync(input_rsync_string):
     pass
 
+if __name__ == '__main__':
+    pass
