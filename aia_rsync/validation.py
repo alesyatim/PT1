@@ -60,23 +60,18 @@ def is_ip (s_string):
             return False
             
 #___scan_port____#
-my_host_name = socket.gethostname()
-target = socket.gethostbyname(my_host_name)
-
 from socket import *
 
-if __name__ == '__main__':
-    #target = raw_input('Enter host to scan: ') #ну можно и вводить самому конечно
-    targetIP = gethostbyname(target)
-    print 'Starting scan on host...', targetIP
-
-    #scan reserved ports
-    for i in xrange(0, 65535):
-        s = socket(AF_INET, SOCK_STREAM)
-        result = s.connect_ex((targetIP, i))
-        if(result == 0) :
-            print ('Port {} OPEN'.format(i,))
-        s.close()
+def scan_free_port(targetIP):
+        print 'Starting scan on host...', targetIP
+        for i in xrange(0, 65535):
+            s = socket(AF_INET, SOCK_STREAM)
+            result = s.connect_ex((targetIP, i))
+            if(result == 0) :
+                list_of_free_ports = i
+                print('Port {} OPEN'.format(list_of_free_ports,))
+            s.close()
+        print (list_of_free_ports)
 
 if __name__ == '__main__':
     path1 = '/tmp/dir'
@@ -87,3 +82,5 @@ if __name__ == '__main__':
     err2 = check_file(path2)
     err3 = check_full_path(path3)
     print(err1, err2, err3)
+
+scan_free_port('127.0.0.1')
