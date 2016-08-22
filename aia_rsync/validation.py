@@ -2,6 +2,7 @@
 import re
 import socket
 import errors as err
+import os
 
 separators = [',', '.', ':']  # valid separators between user and name
 
@@ -36,14 +37,23 @@ def check_file(path):
     else:
         return err.errors['NotFile']
 
-def create_path(path):
+def create_path(path):  # create Dir's if path isn't exist
+    if is_path_exits(path) != 0:
+        os.makedirs(path)
+        return err.errors['PathCreated']
+    else:
+        return err.errors['OK']
     pass
+
 
 def is_path_exits(path):
+    if os.path.exists(path):
+        return err.errors['Ok']
+    else:
+        return err.errors['PathNotFound']
     pass
 
-def create_path(path):
-    pass
+
 
 def is_ip (s_string):
     try:
