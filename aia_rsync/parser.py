@@ -39,7 +39,6 @@ def parse_args(in_str):
     # add source and destination
     #pattern = re.compile('')
 
-
     return err.errors['Ok']
 
 def add_keys(in_keys):
@@ -80,6 +79,6 @@ if __name__ == '__main__':
     parse_keys(test_str)
     parse_args(test_str)
     print(keys, arguments)
-    split_keys()
+    # split_keys()
     #print(keys)
 
