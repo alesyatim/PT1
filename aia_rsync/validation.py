@@ -2,6 +2,7 @@
 import re
 import socket
 import errors as err
+import os
 
 separators = [',', '.', ':']  # valid separators between user and name
 
