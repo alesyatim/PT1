@@ -1,14 +1,12 @@
-import time
 
 class Logger(object):
     __instance = None
     def __new__(self):
         if self.__instance == None:
             self.__instance = self
-            return self
         else:
             self = self.__instance
-            return self
+        return self
 
     def __init__(self, path='/'):
         self.path = path
@@ -22,13 +20,13 @@ print(id(log1), id(log2), id(log3))
 print(log1.path, log2.path, log3.path)
 
 
-def whisper(x):
-    def wrapper_function(word):
-        x(word.lower() + '!')
-    return wrapper_function
-
-@whisper
-def say_smth(word):
-    print(word)
-
-say_smth('Hey')
+# def whisper(x):
+#     def wrapper_function(word):
+#         x(word.lower() + '!')
+#     return wrapper_function
+#
+# @whisper
+# def say_smth(word):
+#     print(word)
+#
+# say_smth('Hey')
