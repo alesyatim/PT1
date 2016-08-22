@@ -14,14 +14,27 @@ def parse_data(in_str):
      pass
 
 def parse_keys(in_str):
-    pattern = re.compile('-([a-z ]+) ')
+    pattern = re.compile('-([a-zA-Z ]+) ')
     res = pattern.findall(in_str)
     add_keys(res)
     return err.errors['Ok']
 
-# def split_keys():
-#     tmp = [list(key) for key in keys if not check_complicated_keys(key)]
-#     print(tmp)
+def split_keys():
+    dup_keys = []
+    dup_keys[:] = keys[:]
+    for key in dup_keys:
+        if not check_complicated_keys(key):
+            if len(key)>1:
+                tmp = list(key)
+                for _ in list(key):
+                    if not check_single_keys(_):
+                        tmp.remove(_)
+                keys.remove(key)
+                new_key = ''.join(set(tmp))
+                keys.append(new_key)
+            else:
+                if not check_single_keys(key):
+                    keys.remove(key)
 
 def check_single_keys(key):
     if key in availible_single_keys:
@@ -75,10 +88,10 @@ def get_arguments():
 
 if __name__ == '__main__':
 
-    test_str = '-v -as -progress -e ssh -i -P pass=HgtG4Fg /dir'
+    test_str = '-v -as -progress -zisSagGgh -e ssh -i -P pass=HgtG4Fg /dir'
     parse_keys(test_str)
     parse_args(test_str)
     print(keys, arguments)
-    # split_keys()
-    #print(keys)
+    split_keys()
+    print(keys)
 
