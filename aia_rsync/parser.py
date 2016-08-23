@@ -20,9 +20,7 @@ def parse_keys(in_str):
     return err.errors['Ok']
 
 def split_keys():
-    dup_keys = []
-    dup_keys[:] = keys[:]
-    for key in dup_keys:
+   for key in keys[:]:
         if not check_complicated_keys(key):
             if len(key)>1:
                 tmp = list(key)
@@ -70,6 +68,7 @@ def parse_machine(input_string):
           #validation ip_adr
     name_of_file = parse_in_str[3:4]
           #validation name_of_file
+    print(user_name, port_name, ip_adr, name_of_file)
     return user_name, port_name, ip_adr, name_of_file
 
 def get_source():
@@ -94,4 +93,8 @@ if __name__ == '__main__':
     print(keys, arguments)
     split_keys()
     print(keys)
+
+    machine = 'user:22@host:/tmp/project/log'
+    parse_machine(machine)
+
 
