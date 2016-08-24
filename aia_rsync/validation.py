@@ -82,6 +82,14 @@ def scan_free_port(targetIP):
                 print('Port {} OPEN'.format(list_of_free_ports,))
             s.close()
         print (list_of_free_ports)
+        
+# ____ check version of Python_____
+def python_ver():
+    version_of_python = sys.version_info[:3]
+    if version_of_python[0] == 2:
+        print('Python 2.x')
+    else:
+        print('Python 3.x')
 
 if __name__ == '__main__':
     path1 = '/tmp/dir'
@@ -94,3 +102,4 @@ if __name__ == '__main__':
     print(err1, err2, err3)
 
 scan_free_port('127.0.0.1')
+python_ver()
