@@ -13,7 +13,8 @@ class Car(object):
      __count = 0
      def __init__(self, price=10000):
          self.__class__.__count+=1
-         print(self.__class__.__count)
+
+         self.__number = self.__count
 
          self.__price = price
 
@@ -67,37 +68,31 @@ class Car(object):
          return self.__remain_race
      remain_race = property(get_remain_race)
 
-     def __lt__(self, other):
-         if self.__engine_type == 'Petrol':
-             return self.__remain_race < other.__remain_race
-         else:
-             return self.__value < other.__value
-     def __gt__(self, other):
-         if self.__engine_type == 'Petrol':
-             return self.__remain_race > other.__remain_race
-         else:
-             return self.__value > other.__value
-     def __le__(self, other):
-         if self.__engine_type == 'Petrol':
-             return self.__remain_race <= other.__remain_race
-         else:
-             return self.__value <= other.__value
-     def __ge__(self, other):
-         if self.__engine_type == 'Petrol':
-             return self.__remain_race >= other.__remain_race
-         else:
-             return self.__value >= other.__value
+     def get_number(self):
+         return self.__number
+     def get_type(self):
+         return self.__engine_type
 
-a = []
-for i in range(30):
-    a.append(Car())
-    a[i].race = gen_race()
-    print('race='+str(a[i].race)+'km')
-    # print(a[i].__dict__)
-    print('value=' + str(a[i].value)+'$')
-    print('used_fuel='+str(a[i].used_fuel)+'L')
-    print('remain race='+str(a[i].remain_race)+'km')
-    print('#####################################')
-b = sorted(a)
-print(b)
+     def __lt__(self, other):
+         if self.__engine_type == 'Petrol' and other.__engine_type == 'Petrol':
+             return self.__remain_race < other.__remain_race
+         elif self.__engine_type == 'Diesel' and other.__engine_type == 'Diesel':
+             return self.__value < other.__value
+         else:
+             return self.__engine_type < other.__engine_type
+
+if __name__ == '__main__':
+    a = []
+    for i in range(30):
+        a.append(Car())
+        a[i].race = gen_race()
+        print('race='+str(a[i].race)+'km')
+        # print(a[i].__dict__)
+        print('value=' + str(a[i].value)+'$')
+        print('used_fuel='+str(a[i].used_fuel)+'L')
+        print('remain race='+str(a[i].remain_race)+'km')
+        print('#####################################')
+    b = sorted(a)
+    for i in b:
+        print(i.get_number(), i.get_type(), i.remain_race, i.value)
 
