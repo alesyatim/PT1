@@ -62,13 +62,18 @@ class MainWindow(object):
         lab14 = Label(info_frame, text='FW_Version', width=40)
         lab14.grid(column=2, row=3)
         info_frame.grid(column=0, row=2)
+        but1 = Button(info_frame, text='Load')
+        but1.grid(column=0, row=4)
+        but2 = Button(info_frame, text='Load')
+        but2.grid(column=1, row=4)
         # ----Info------
 
-        but1 = Button(top,text='Load')
-        but1.grid(column=0, row=3)
+
+
 
         # ------ Enclosures ------
         enclosure_frame = Frame(top)
+
         lab15 = Label(enclosure_frame, text=self.get_enclosure(), width=80, height=20, bg='yellow')
         lab15.grid(column=0, row=0, columnspan=2)
         lab16 = Label(enclosure_frame, text='Enclosures', width=40)
