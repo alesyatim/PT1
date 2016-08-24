@@ -4,8 +4,7 @@ engine_info = {
                 engine_types[0]:{'race':200000, 'fuel_rate':8, 'dif_price':100, 'fuel_cost':2.4},
                 engine_types[1]:{'race':150000, 'fuel_rate':6, 'dif_price':120, 'fuel_cost':1.8}
                }
-# print(engine_types[1])
-# print(engine_info['Diesel']['fuel'])
+
 def gen_race():
      return random.randint(29000, 186000)
 
@@ -54,13 +53,13 @@ class Car(object):
              self.__value = 0
      def get_value(self):
          return self.__value
-     value = property(get_value, set_value)
+     value = property(get_value)
 
      def set_used_fuel(self):
          self.__used_fuel = int(self.__race) * int(self.__fuel_rate) / 100
      def get_used_fuel(self):
          return self.__used_fuel
-     used_fuel = property(get_used_fuel, set_used_fuel)
+     used_fuel = property(get_used_fuel)
 
      def set_remain_race(self):
          self.__remain_race = self.__max_race - self.__race
