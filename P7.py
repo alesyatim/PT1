@@ -1,40 +1,56 @@
 import random
 engine_types = ['Petrol', 'Diesel']
 engine_info = {
-                engine_types[0]:{'race':200000, 'fuel_rate':8, 'dif_price':100, 'fuel_cost':2.4},
-                engine_types[1]:{'race':150000, 'fuel_rate':6, 'dif_price':120, 'fuel_cost':1.8}
+                'Petrol':{'max_race':200000, 'fuel_rate':8, 'dif_price':100, 'fuel_cost':2.4},
+                'Diesel':{'max_race':150000, 'fuel_rate':6, 'dif_price':120, 'fuel_cost':1.8}
                }
 
-def gen_race():
-     return random.randint(29000, 186000)
+class Race():
+    def __init__(self, min_race=29000, max_race=186000):
+        #self.__race = 0
+        self.__min_race = min_race
+        self.__max_race = max_race
+    def gen_race(self):
+        return random.randint(self.__min_race, self.__max_race)
+
+class Plant():
+    __count = 0
+    def __init__(self):
+        pass
+    def create_car(self):
+        self.__class__.__count+= 1
+        num =  self.__class__.__count
+        if self.__count % 3 == 0:
+            engine_type = 'Diesel'
+        else:
+            engine_type = 'Petrol'
+        if self.__count % 5 == 0:
+            tank = 75
+        else:
+            tank = 60
+        car = Car(num,engine_type, tank, price=10000)
+        return car
 
 class Car(object):
-     __count = 0
-     def __init__(self, price=10000):
-         self.__class__.__count+=1
-
-         self.__number = self.__count
-
+     def __init__(self, num, engine_type,tank, price):
+         self.__number = num
          self.__price = price
-
-         if self.__count%3 == 0:
-             self.__engine_type = engine_types[1]
-         else: self.__engine_type = engine_types[0]
-
-         self.__max_race = engine_info[self.__engine_type]['race']
+         self.__engine_type = engine_type
+         self.__max_race = engine_info[self.__engine_type]['max_race']
          self.__fuel_rate = engine_info[self.__engine_type]['fuel_rate']
          self.__dif_price = engine_info[self.__engine_type]['dif_price']
          self.__fuel_cost = engine_info[self.__engine_type]['fuel_cost']
-
-         if self.__count%5 == 0:
-             self.__tank = 75
-         else: self.__tank = 60
-
+         self.__tank = tank
          self.__race =  0 # self.set_race(0)
          self.__value = price
          self.__used_fuel = 0
-         self.__remain_race = 0
+         self.__remain_race = self.__max_race
          self.__costs = 0
+
+     def __str__(self):
+         s = 'N={}  engine_type={} value ={} used_fuel={} remain_rate={}'.\
+             format(str(self.__number), self.__engine_type, str(self.__value), str(self.__used_fuel), str(self.__remain_race))
+         return s
 
      def get_race(self):
          return self.__race
@@ -81,17 +97,14 @@ class Car(object):
              return self.__engine_type < other.__engine_type
 
 if __name__ == '__main__':
-    a = []
-    for i in range(30):
-        a.append(Car())
-        a[i].race = gen_race()
-        print('race='+str(a[i].race)+'km')
-        # print(a[i].__dict__)
-        print('value=' + str(a[i].value)+'$')
-        print('used_fuel='+str(a[i].used_fuel)+'L')
-        print('remain race='+str(a[i].remain_race)+'km')
-        print('#####################################')
-    b = sorted(a)
+    plant = Plant()
+    race = Race()
+    cars = [plant.create_car() for i in range(30)]
+    for car in cars:
+        car.set_race(race.gen_race())
+        print(car)
+
+    b = sorted(cars)
     for i in b:
-        print(i.get_number(), i.get_type(), i.remain_race, i.value)
+         print(i)
 
