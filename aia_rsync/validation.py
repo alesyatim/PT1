@@ -3,6 +3,8 @@ import re
 import socket
 import errors as err
 import os
+import hashlib
+import sys
 
 separators = [',', '.', ':']  # valid separators between user and name
 
@@ -90,6 +92,17 @@ def python_ver():
         print('Python 2.x')
     else:
         print('Python 3.x')
+        
+#_____compare_controlsum_of_file____
+def get_hash_md5_sum(filename):
+    with open(filename, 'r') as f:
+        m = hashlib.md5()
+        while True:
+            data = f.read(128)
+            if not data:
+                break
+            m.update(data)
+        return m.hexdigest()
 
 if __name__ == '__main__':
     path1 = '/tmp/dir'
@@ -103,3 +116,11 @@ if __name__ == '__main__':
 
 scan_free_port('127.0.0.1')
 python_ver()
+
+f1sum = get_hash_md5_sum('file1.txt')
+f2sum = get_hash_md5_sum('file2.txt')
+
+if f1sum == f2sum:
+    print ('good job')
+else:
+    print ('bad job')
