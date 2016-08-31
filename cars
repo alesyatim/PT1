@@ -1,0 +1,144 @@
+import random, math
+from operator import itemgetter
+import cProfile, pstats
+
+engine_types = ['Petrol', 'Diesel']
+engine_info = {
+                'Petrol':{'max_race':200000, 'fuel_rate':8, 'dif_price':100, 'fuel_cost':2.4},
+                'Diesel':{'max_race':150000, 'fuel_rate':6, 'dif_price':120, 'fuel_cost':1.8}
+               }
+
+class Race(object):
+    def __init__(self, min_race=29000, max_race=186000):
+        #self.__race = 0
+        self.__min_race = min_race
+        self.__max_race = max_race
+    def gen_race(self):
+        return random.randint(self.__min_race, self.__max_race)
+
+class Plant(object):
+    __count = 0
+    def __init__(self):
+        pass
+    def create_car(self):
+        self.__class__.__count+= 1
+        num =  self.__class__.__count
+        if self.__count % 3 == 0:
+            engine_type = 'Diesel'
+        else:
+            engine_type = 'Petrol'
+        if self.__count % 5 == 0:
+            tank = 75
+        else:
+            tank = 60
+        car = Car(num,engine_type, tank, 10000)
+        return car
+
+class Car(object):
+     def __init__(self, num, engine_type,tank, price):
+         self.__number = num
+         self.__price = price
+         self.engine_type = engine_type
+         self.max_race = engine_info[self.engine_type]['max_race']
+         self.fuel_rate = engine_info[self.engine_type]['fuel_rate']
+         self.__dif_price = engine_info[self.engine_type]['dif_price']
+         self.__fuel_cost = engine_info[self.engine_type]['fuel_cost']
+         self.tank = tank
+         self.race = 0 # self.set_race(0)
+         self.value = price
+         self.used_fuel = 0
+         self.remain_race = self.max_race
+         self.__costs = 0
+         self.count_fuelling = 0
+
+
+     def __str__(self):
+         s = 'N={}  engine_type={} value ={} used_fuel={} remain_rate={}'.\
+             format(str(self.__number), self.engine_type, str(self.value), str(self.used_fuel), str(self.remain_race))
+         return s
+
+     def __getitem__(self, item):
+         return getattr(self, item)
+
+     def __add__(self, other):
+         pass
+
+     def __lt__(self, other):
+         if self.engine_type == 'Petrol' and other.engine_type == 'Petrol':
+             return self.remain_race < other.remain_race
+         elif self.engine_type == 'Diesel' and other.engine_type == 'Diesel':
+             return self.value < other.value
+         else:
+             return self.engine_type < other.engine_type
+
+     def get_race(self):
+         return self.race
+     def set_race(self, race):
+         self.race += race
+         if self.race > self.max_race:
+             self.race = self.max_race
+         self.set_value()
+         self.calc_used_fuel()
+         self.set_remain_race()
+     # race = property(get_race, set_race)
+
+     def set_value(self):
+         self.value =  int(self.__price) - int(self.race) * int(self.__dif_price)/ 1000
+         if self.value < 0:
+             self.value = 0
+     def get_value(self):
+         return self.value
+     remain_value = property(get_value)
+
+     def calc_used_fuel(self):
+         recalc_fuel_rate = (int(self.race) / 1000  * int(self.fuel_rate))/100.0 + int(self.fuel_rate)
+         self.used_fuel = int(self.race) * recalc_fuel_rate / 100.0
+     def get_used_fuel(self):
+         return self.used_fuel
+     def calc_count_fuelling(self):
+         self.count_fuelling = math.floor(self.used_fuel/self.tank)
+     # used_fuel = property(get_used_fuel)
+
+     def set_remain_race(self):
+         self.remain_race = self.max_race - self.race
+     def get_remain_race(self):
+         return self.remain_race
+     rem_race = property(get_remain_race)
+
+     def get_number(self):
+         return self.__number
+     def get_type(self):
+         return self.engine_type
+
+
+
+if __name__ == '__main__':
+    plant = Plant()
+    race = Race()
+    cars = [plant.create_car() for i in range(1000)]
+    for car in cars:
+        car.set_race(race.gen_race())
+        # print(car)
+
+    p = cProfile.Profile()
+
+    b = sorted(cars)
+    a = p.run('sorted(cars)')
+    a.print_stats()
+
+    s_diesels = sorted(filter(lambda x: x.engine_type == 'Diesel', cars), key=itemgetter('value'))
+    s_petrol =  sorted(filter(lambda x: x.engine_type == 'Petrol', cars), key=itemgetter('remain_race'))
+    s = s_diesels + s_petrol
+    a = p.run('sorted(filter(lambda x: x.engine_type == "Diesel", cars), key=itemgetter("value"))')
+    a.print_stats()
+    x = p.run('sorted(filter(lambda x: x.engine_type == "Diesel", cars), key=lambda x: x.value)')
+    x.print_stats()
+
+    # for i in b:
+    #      print(i)
+    # print('##################')
+    # for j in s:
+    #     print(j)
+    # p.disable()
+    # #st = pstats.Stats()
+
