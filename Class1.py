@@ -16,7 +16,7 @@ for letter in gen:
     if counter > 5:
         break
 
-print(gen.next())
+# print(gen.next())
 
 
 dict([ [1,2], [2,3], (4,5)])
