@@ -20,6 +20,7 @@ for letter in gen:
 
 
 dict([ [1,2], [2,3], (4,5)])
+print(dict)
 
 a = "AB"
 b = {'1':'c', '2':'e'}
